@@ -1,19 +1,34 @@
 {
-  "name": "radix-cli",
-  "version": "1.0.0",
-  "description": "CLI for managing Radix components in a Drupal theme",
-  "main": "cli.js",
-  "bin": {
-    "radix-drupal-cli": "./cli.js"
-  },
-  "dependencies": {
-    "@clack/prompts": "^0.7.0",
-    "fs-extra": "^11.1.1",
-    "js-yaml": "^4.1.0"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+	"name": "drupal-radix-cli",
+	"version": "1.0.0",
+	"description": "CLI for managing Radix components in a Drupal theme",
+	"main": "cli.js",
+	"bin": {
+		"drupal-radix-cli": "./cli.js"
+	},
+	"dependencies": {
+		"@clack/prompts": "^0.7.0",
+		"fs-extra": "^11.1.1",
+		"js-yaml": "^4.1.0"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": {
+		"name": "Sohail Lajevardi",
+		"email": "doxigo@gmail.com",
+		"url": "https://github.com/doxigo"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/doxigo/drupal-radix-cli.git"
+	},
+	"keywords": [
+		"Drupal",
+		"Radix",
+		"CLI",
+		"theme",
+		"components"
+	],
+	"license": "MIT"
 }
