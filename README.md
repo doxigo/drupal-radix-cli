@@ -57,7 +57,7 @@ This will generate a new component folder with the following files:
 - `[component-name]/[component-name].twig`
 - `[component-name]/[component-name].component.yml`
 - `[component-name]/[component-name].scss`
-- `[component-name]/[component-name].js`
+- `[component-name]/_[component-name].js`
 - `[component-name]/README.md`
 
 Make sure to remove any unwanted files and update your files accordingly.
