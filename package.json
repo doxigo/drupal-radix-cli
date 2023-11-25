@@ -1,6 +1,6 @@
 {
 	"name": "drupal-radix-cli",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "CLI for managing Radix components in a Drupal theme",
 	"main": "cli.js",
 	"bin": {
