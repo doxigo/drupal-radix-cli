@@ -14,7 +14,7 @@ _Note_: that this CLI uses your own local Radix theme as a source for components
 Ensure you have Node.js and npm installed on your system. Install the CLI tool globally via npm:
 
 ```bash
-npm install -g radix-drupal-cli
+npm install -g drupal-radix-cli
 ```
 
 ## Usage
@@ -26,7 +26,7 @@ Once installed, you can use the CLI tool with the following commands:
 To list all Radix components available in the default directory:
 
 ```bash
-radix-drupal-cli list
+drupal-radix-cli list
 ```
 
 ### Add Components
@@ -34,13 +34,13 @@ radix-drupal-cli list
 To add a Radix component to your current theme:
 
 ```bash
-radix-drupal-cli add
+drupal-radix-cli add
 ```
 
 Use the `--radix-path` flag to specify a custom Radix components directory if your Radix base theme is installed in a non-standard location:
 
 ```bash
-radix-drupal-cli add --radix-path ../../radix/components
+drupal-radix-cli add --radix-path ../../radix/components
 ```
 
 ## Help
@@ -48,10 +48,10 @@ radix-drupal-cli add --radix-path ../../radix/components
 Display usage instructions:
 
 ```bash
-radix-drupal-cli --help
+drupal-radix-cli --help
 ```
 
-Or simply `radix-drupal-cli`.
+Or simply `drupal-radix-cli`.
 
 ## Radix Theme
 
