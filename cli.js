@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const yaml = require('js-yaml');
 const prompts = require('@clack/prompts');
-const { isCancel, cancel, select, text } = prompts;
+const { isCancel, cancel, select, text, outro } = prompts;
 
 let radixComponentsPath = '../../contrib/radix/components';
 const activeThemePath = process.cwd();
@@ -20,6 +20,10 @@ async function listComponents() {
 				console.log(`- ${doc.name}: ${doc.description}`);
 			}
 		}
+
+		outro(
+			"That's all we have for now, To add a component to your theme, run `drupal-radix-cli add` or to generate a new one `drupal-radix-cli generate`."
+		);
 	} catch (error) {
 		console.error('Error listing components:', error);
 	}
@@ -63,9 +67,62 @@ async function addComponent() {
 		}
 
 		fs.copySync(sourcePath, targetPath);
-		console.log(`Component ${componentName} has been added at: ${targetPath}`);
+		outro(`Component ${componentName} has been added at: ${targetPath}`);
 	} catch (error) {
 		console.error('Error during the add component process:', error);
+	}
+}
+
+async function generateComponent() {
+	const response = await text({
+		message: 'What is the name of your component?',
+		placeholder: 'card',
+		onCancel: () => {
+			cancel('Operation cancelled.');
+			process.exit(1);
+		},
+	});
+
+	if (isCancel(response)) {
+		cancel('Operation cancelled.');
+		process.exit(1);
+	}
+
+	const componentName = response;
+
+	const componentsDirPath = path.join(activeThemePath, 'components');
+	const componentDirPath = path.join(componentsDirPath, componentName);
+
+	try {
+		if (await fs.pathExists(componentDirPath)) {
+			outro(
+				`The ${componentName} component already exists, maybe try another name?`
+			);
+			process.exit(1);
+		}
+
+		await fs.ensureDir(componentsDirPath);
+		await fs.ensureDir(componentDirPath);
+
+		const filesToCreate = [
+			`${componentName}.twig`,
+			`${componentName}.scss`,
+			`_${componentName}.js`,
+			'README.md',
+			`${componentName}.component.yml`,
+		];
+
+		for (const file of filesToCreate) {
+			const filePath = path.join(componentDirPath, file);
+			await fs.ensureFile(filePath);
+		}
+
+		console.log(
+			`Component ${componentName} generated successfully. Make sure to remove anything that you don't need and update your ${componentName}.component.yml file.`
+		);
+	} catch (error) {
+		console.error('Error generating component:', error);
+		process.exit(1);
 	}
 }
 
@@ -76,6 +133,7 @@ Usage: drupal-radix-cli [command] [--radix-path <path>]
 Commands:
   list            - Displays a list of available Radix components.
   add             - Adds a new component to your theme, replacing the existing one if it's already there.
+  generate        - Generates a new component structure within the 'components' directory.
   help            - Shows this help message.
 
 Flags:
@@ -94,8 +152,7 @@ You can also use the --help flag to show this help message.
 		if (!providedPath) {
 			try {
 				providedPath = await text({
-					message:
-						'In case Radix is installed in an unusual directory, enter a relative path to the Radix components directory:',
+					message: 'Enter the path to the Radix components directory:',
 					placeholder: '../../../contrib/radix/components',
 					onCancel: () => {
 						cancel('Operation cancelled.');
@@ -103,10 +160,7 @@ You can also use the --help flag to show this help message.
 					},
 				});
 
-				// Check if it's not the cancellation symbol
-				if (typeof providedPath !== 'symbol') {
-					radixComponentsPath = path.resolve(providedPath);
-				}
+				radixComponentsPath = path.resolve(providedPath);
 			} catch (error) {
 				if (isCancel(error)) {
 					cancel('Operation cancelled.');
@@ -128,6 +182,8 @@ You can also use the --help flag to show this help message.
 			await listComponents();
 		} else if (command === 'add') {
 			await addComponent();
+		} else if (command === 'generate') {
+			await generateComponent();
 		} else if (command === 'help') {
 			showHelp();
 		} else {
