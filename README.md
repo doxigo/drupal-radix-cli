@@ -1,6 +1,6 @@
 # Radix Drupal CLI
 
-Radix Drupal CLI is a command-line interface designed to manage Drupal Radix 6 components. It allows for easy listing and adding of components to your Drupal theme, leveraging the power of the Radix base theme.
+Radix Drupal CLI is a command-line interface designed to manage [Drupal Radix 6](https://www.drupal.org/project/radix) components. It allows for easy listing and adding of components to your Drupal theme, leveraging the power of the Radix base theme.
 
 _Note_: that this CLI uses your own local Radix theme as a source for components. If you want to add components from the latest version of Radix, you must first update your local Radix theme.
 
