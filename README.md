@@ -8,6 +8,7 @@ _Note_: that this CLI uses your own local Radix theme as a source for components
 
 - **List Components**: Display all available Radix components.
 - **Add Components**: Add Radix components to your theme, automatically replacing any existing ones.
+- **Generate Components**: Generate a new component folder with all the necessary files.
 
 ## Installation
 
