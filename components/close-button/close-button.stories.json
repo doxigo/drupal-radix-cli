@@ -1,0 +1,39 @@
+{
+	"title": "Radix/Close Button",
+	"description": "A generic close button for dismissing content like modals and alerts.",
+	"argTypes": {
+		"size": {
+			"name": "Size",
+			"description": "Bootstrap button size class",
+			"defaultValue": "",
+			"control": "select",
+			"options": {
+				"'- none -'": "",
+				"Small": "btn-sm",
+				"Large": "btn-lg"
+			}
+		},
+		"disabled": {
+			"name": "Disabled",
+			"description": "Disabled button",
+			"defaultValue": false,
+			"control": "boolean"
+		}
+	},
+	"stories": [
+		{
+			"name": "Small",
+			"args": {
+				"size": "btn-sm",
+				"disabled": false
+			}
+		},
+		{
+			"name": "Large",
+			"args": {
+				"size": "btn-lg",
+				"disabled": false
+			}
+		}
+	]
+}

@@ -1,0 +1,45 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json
+name: Badge
+status: experimental
+description: Documentation and examples for badges, our small count and labeling component.
+props:
+  type: object
+  properties:
+    html_tag:
+      type: string
+      title: The HTML tag to use for the bade. Defaults to span.
+      default: span
+      enum:
+        - span
+        - div
+        - a
+    url:
+      type: string
+      title: URL Link
+      description: URL link for Badge when the HTML tag is an anchor link.
+    color:
+      type: string
+      title: Background and Text Color
+      description: Set a background-color with contrasting foreground color with our .text-bg-{color} helpers. Previously it was required to manually pair your choice of .text-{color} and .bg-{color} utilities for styling, which you still may use if you prefer.
+      default: secondary
+      enum:
+        - primary
+        - secondary
+        - success
+        - info
+        - warning
+        - danger
+        - light
+        - dark
+    utility_classes:
+      type: array
+      title: Utility Classes
+      default: []
+      description: An array of utility classes. Use to add extra Bootstrap utility classes or custom CSS classes over to this to this component.
+    attributes:
+      type: Drupal\Core\Template\Attribute
+slots:
+  content:
+    type: string
+    title: Content
+    description: Content for Badge.

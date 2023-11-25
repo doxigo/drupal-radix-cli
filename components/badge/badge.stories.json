@@ -1,0 +1,119 @@
+{
+	"title": "Radix/Badge",
+	"desc": "Documentation and examples for badges, our small count and labeling component.",
+	"argTypes": {
+		"html_tag": {
+			"name": "HTML Tag",
+			"desc": "The HTML tag to use for the bade. Defaults to span.",
+			"defaultValue": "span",
+			"control": "select",
+			"options": {
+				"span": "span",
+				"div": "div",
+				"a": "a"
+			}
+		},
+		"color": {
+			"name": "Background and Text Color",
+			"description": "Set a background-color with contrasting foreground color with our .text-bg-{color} helpers. Previously it was required to manually pair your choice of .text-{color} and .bg-{color} utilities for styling, which you still may use if you prefer.",
+			"defaultValue": "secondary",
+			"control": "select",
+			"options": {
+				"Primary": "primary",
+				"Secondary": "secondary",
+				"Success": "success",
+				"Info": "info",
+				"Warning": "warning",
+				"Danger": "danger",
+				"Light": "light",
+				"Dark": "dark"
+			}
+		},
+		"content": {
+			"name": "Content",
+			"description": "The content for the button",
+			"control": "text",
+			"defaultValue": "Button"
+		},
+		"url": {
+			"name": "URL Link",
+			"description": "URL link for Badge when the HTML tag is an anchor link.",
+			"defaultValue": "",
+			"control": "text"
+		}
+	},
+	"stories": [
+		{
+			"name": "Primary",
+			"args": {
+				"html_tag": "span",
+				"color": "primary",
+				"content": "Badge",
+				"url": ""
+			}
+		},
+		{
+			"name": "Secondary",
+			"args": {
+				"html_tag": "span",
+				"color": "secondary",
+				"content": "Badge",
+				"url": ""
+			}
+		},
+		{
+			"name": "Success",
+			"args": {
+				"html_tag": "span",
+				"color": "success",
+				"content": "Badge",
+				"url": ""
+			}
+		},
+		{
+			"name": "Info",
+			"args": {
+				"html_tag": "span",
+				"color": "info",
+				"content": "Badge",
+				"url": ""
+			}
+		},
+		{
+			"name": "Warning",
+			"args": {
+				"html_tag": "span",
+				"color": "warning",
+				"content": "Badge",
+				"url": ""
+			}
+		},
+		{
+			"name": "Danger",
+			"args": {
+				"html_tag": "span",
+				"color": "danger",
+				"content": "Badge",
+				"url": ""
+			}
+		},
+		{
+			"name": "Light",
+			"args": {
+				"html_tag": "span",
+				"color": "light",
+				"content": "Badge",
+				"url": ""
+			}
+		},
+		{
+			"name": "Dark",
+			"args": {
+				"html_tag": "span",
+				"color": "dark",
+				"content": "Badge",
+				"url": ""
+			}
+		}
+	]
+}

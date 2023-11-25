@@ -1,0 +1,19 @@
+{
+  "name": "radix-cli",
+  "version": "1.0.0",
+  "description": "CLI for managing Radix components in a Drupal theme",
+  "main": "cli.js",
+  "bin": {
+    "radix-drupal-cli": "./cli.js"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.7.0",
+    "fs-extra": "^11.1.1",
+    "js-yaml": "^4.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
