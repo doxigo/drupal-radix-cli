@@ -12,7 +12,7 @@ _Note_: that this CLI uses your own local Radix theme as a source for components
 
 ## Installation
 
-Ensure you have Node.js and npm installed on your system. Install the CLI tool globally via npm:
+Ensure you have Node.js and npm installed on your system. Install the CLI tool within your subtheme or globally via npm:
 
 ```bash
 npm install drupal-radix-cli
