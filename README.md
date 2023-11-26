@@ -1,6 +1,6 @@
 # Radix Drupal CLI
 
-Radix Drupal CLI is a command-line interface designed to manage [Drupal Radix 6](https://www.drupal.org/project/radix) components. It allows for easy listing and adding of components to your Drupal theme, leveraging the power of the Radix base theme.
+Radix Drupal CLI is an interactive prompt designed to manage [Drupal Radix 6](https://www.drupal.org/project/radix) components. It allows for easy listing, adding and generating of components to your Drupal theme, leveraging the power of the Radix base theme components.
 
 _Note_: that this CLI uses your own local Radix theme as a source for components. If you want to add components from the latest version of Radix, you must first update your local Radix theme.
 
@@ -15,8 +15,10 @@ _Note_: that this CLI uses your own local Radix theme as a source for components
 Ensure you have Node.js and npm installed on your system. Install the CLI tool globally via npm:
 
 ```bash
-npm install -g drupal-radix-cli
+npm install drupal-radix-cli
 ```
+
+_Note_: You may also install the package globally: `npm install -g drupal-radix-cli`
 
 ## Usage
 
