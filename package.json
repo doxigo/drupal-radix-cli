@@ -1,6 +1,6 @@
 {
 	"name": "drupal-radix-cli",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "CLI for managing Radix components in a Drupal theme",
 	"main": "cli.js",
 	"bin": {
@@ -22,12 +22,6 @@
 		"type": "git",
 		"url": "https://github.com/doxigo/drupal-radix-cli.git"
 	},
-	"keywords": [
-		"Drupal",
-		"Radix",
-		"CLI",
-		"theme",
-		"components"
-	],
+	"keywords": ["Drupal", "Radix", "CLI", "theme", "components"],
 	"license": "MIT"
 }
