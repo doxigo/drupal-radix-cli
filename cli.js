@@ -12,22 +12,25 @@ const activeThemePath = process.cwd();
 async function listComponents() {
   try {
     intro(color.magenta(`Available ${color.bold("Radix")} Components:`));
-		const components = await fs.readdirSync(radixComponentsPath);
-		for (const componentDir of components) {
-			const ymlPath = `${radixComponentsPath}/${componentDir}/${componentDir}.component.yml`;
-			if (fs.existsSync(ymlPath)) {
-				const fileContents = await fs.readFile(ymlPath, "utf8");
-				const doc = yaml.load(fileContents);
-				console.log(`- ${color.magenta(doc.name)}: ${doc.description}`);
-			}
-		}
-    
-		outro(
-			color.magenta(`That's all. To add a component to your theme, run ${color.inverse("drupal-radix-cli add")} or to generate a new one ${color.inverse("drupal-radix-cli generate")}.`)
-		);
-	} catch (error) {
-		console.error("Error listing components:", error);
-	}
+    const components = await fs.readdirSync(radixComponentsPath);
+    for (const componentDir of components) {
+      const ymlPath = `${radixComponentsPath}/${componentDir}/${componentDir}.component.yml`;
+      if (fs.existsSync(ymlPath)) {
+        const fileContents = await fs.readFile(ymlPath, "utf8");
+        const doc = yaml.load(fileContents);
+        if (doc?.name) {
+          const description = doc.description || 'No description available';
+          console.log(`- ${color.magenta(doc.name)}: ${description}`);
+        }
+      }
+    }
+
+    outro(
+      color.magenta(`That's all. To add a component to your theme, run ${color.inverse("drupal-radix-cli add")} or to generate a new one ${color.inverse("drupal-radix-cli generate")}.`)
+    );
+  } catch (error) {
+    console.error("Error listing components:", error);
+  }
 }
 
 async function addComponent() {
@@ -37,12 +40,20 @@ async function addComponent() {
           .map((component) => {
               const ymlPath = `${radixComponentsPath}/${component}/${component}.component.yml`;
               if (fs.existsSync(ymlPath)) {
-                  const doc = yaml.load(fs.readFileSync(ymlPath, "utf8"));
-                  return { value: component, label: doc.name };
+                  const fileContents = fs.readFileSync(ymlPath, "utf8");
+                  const doc = yaml.load(fileContents);
+                  if (doc?.name) {
+                      return { value: component, label: doc.name };
+                  }
               }
               return null;
           })
           .filter(Boolean);
+
+      if (options.length === 0) {
+          outro(color.yellow("No components available to add."));
+          return;
+      }
 
       const maxItems = 8;
       const componentName = await select({
@@ -50,13 +61,13 @@ async function addComponent() {
           options: options,
           maxItems: maxItems,
           onCancel: () => {
-              cancel(outro(color.yellow(`"Operation cancelled."`)));
+              cancel("Operation cancelled.");
               process.exit(0);
           },
       });
 
       if (isCancel(componentName)) {
-          cancel(outro(color.yellow(`"Operation cancelled."`)));
+          cancel("Operation cancelled.");
           process.exit(0);
       }
 
