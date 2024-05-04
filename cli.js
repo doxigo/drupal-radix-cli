@@ -108,7 +108,7 @@ async function generateComponent() {
 			`${componentName}.twig`,
 			`${componentName}.scss`,
 			`_${componentName}.js`,
-			"README.md",
+			"README.mdx",
 			`${componentName}.component.yml`,
 		];
 
