@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-const path = require("path");
+const path = require("node:path");
 const fs = require("fs-extra");
 const yaml = require("js-yaml");
 const prompts = require("@clack/prompts");
-const { isCancel, cancel, select, text, intro, outro } = prompts;
+const { isCancel, cancel, select, text, intro, outro, confirm } = prompts;
 const color = require('picocolors');
 
 let radixComponentsPath = "../../contrib/radix/components";
@@ -31,61 +31,73 @@ async function listComponents() {
 }
 
 async function addComponent() {
-	try {
-		const components = fs.readdirSync(radixComponentsPath);
-		const options = components
-			.map((component) => {
-				const ymlPath = `${radixComponentsPath}/${component}/${component}.component.yml`;
-				if (fs.existsSync(ymlPath)) {
-					const doc = yaml.load(fs.readFileSync(ymlPath, "utf8"));
-					return { value: component, label: doc.name };
-				}
-				return null;
-			})
-			.filter(Boolean);
+  try {
+      const components = fs.readdirSync(radixComponentsPath);
+      const options = components
+          .map((component) => {
+              const ymlPath = `${radixComponentsPath}/${component}/${component}.component.yml`;
+              if (fs.existsSync(ymlPath)) {
+                  const doc = yaml.load(fs.readFileSync(ymlPath, "utf8"));
+                  return { value: component, label: doc.name };
+              }
+              return null;
+          })
+          .filter(Boolean);
 
-		const maxItems = 8;
-		const componentName = await select({
-			message: "Pick a Radix component to add to your theme.",
-			options: options,
-			maxItems: maxItems,
-			onCancel: () => {
-				cancel("Operation cancelled.");
-				process.exit(0);
-			},
-		});
+      const maxItems = 8;
+      const componentName = await select({
+          message: "Pick a Radix component to add to your theme.",
+          options: options,
+          maxItems: maxItems,
+          onCancel: () => {
+              cancel(outro(color.yellow(`"Operation cancelled."`)));
+              process.exit(0);
+          },
+      });
 
-		if (isCancel(componentName)) {
-			cancel(outro(color.red(`"Operation cancelled."`)));
-			process.exit(0);
-		}
+      if (isCancel(componentName)) {
+          cancel(outro(color.yellow(`"Operation cancelled."`)));
+          process.exit(0);
+      }
 
-		const sourcePath = `${radixComponentsPath}/${componentName}`;
-		const targetPath = `${activeThemePath}/components/${componentName}`;
+      const sourcePath = `${radixComponentsPath}/${componentName}`;
+      const targetPath = `${activeThemePath}/components/${componentName}`;
 
-		if (fs.existsSync(targetPath)) {
-			fs.removeSync(targetPath);
-		}
+      if (fs.existsSync(targetPath)) {
+          // Ask user if they want to overwrite the existing component
+          const overwrite = await confirm({
+              message: `${componentName} already exists. Do you want to overwrite it?`,
+              initial: false
+          });
 
-		fs.copySync(sourcePath, targetPath);
-		outro(color.magenta(`Component ${componentName} has been added at: ${color.bold(targetPath)}`));
-	} catch (error) {
-		console.error("Error during the add component process:", error);
-	}
+          if (isCancel(overwrite) || !overwrite) {
+              outro(color.yellow(`Operation cancelled. ${componentName} was not overwritten.`));
+              process.exit(0);
+          }
+
+          fs.removeSync(targetPath);
+      }
+
+      fs.copySync(sourcePath, targetPath);
+      outro(color.magenta(`Component ${componentName} has been added at: ${color.bold(targetPath)}`));
+  } catch (error) {
+      console.error("Error during the add component process:", error);
+  }
 }
+
 
 async function generateComponent() {
 	const response = await text({
 		message: "What is the name of your component?",
 		placeholder: "eg. card",
 		onCancel: () => {
-			cancel(outro(color.red(`"Operation cancelled."`)));
+			cancel(outro(color.yellow(`"Operation cancelled."`)));
 			process.exit(0);
 		},
 	});
 
 	if (isCancel(response)) {
-    cancel(outro(color.red(`"Operation cancelled."`)));
+    cancel(outro(color.yellow(`"Operation cancelled."`)));
 		process.exit(0);
 	}
 
@@ -97,7 +109,7 @@ async function generateComponent() {
 	try {
 		if (await fs.pathExists(componentDirPath)) {
 			outro(
-				color.red(`The ${color.italic(componentName)} component already exists! maybe try another name?`)
+				color.yellow(`The ${color.italic(componentName)} component already exists! maybe try another name?`)
 			);
 			process.exit(0);
 		}
@@ -189,7 +201,7 @@ ${color.green("--radix-path")}    - Optional. Specify the path to the Radix comp
 					message: "Enter the path to the Radix components directory:",
 					placeholder: "../../../contrib/radix/components",
 					onCancel: () => {
-						cancel(outro(color.red(`"Operation cancelled."`)));
+						cancel(outro(color.yellow(`"Operation cancelled."`)));
 						process.exit(0);
 					},
 				});
@@ -197,7 +209,7 @@ ${color.green("--radix-path")}    - Optional. Specify the path to the Radix comp
 				radixComponentsPath = path.resolve(providedPath);
 			} catch (error) {
 				if (isCancel(error)) {
-					cancel(outro(color.red(`"Operation cancelled."`)));
+					cancel(outro(color.yellow(`"Operation cancelled."`)));
 					process.exit(1);
 				} else {
 					console.error("An unexpected error occurred:", error);
